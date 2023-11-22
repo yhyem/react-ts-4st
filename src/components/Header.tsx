@@ -20,12 +20,16 @@ export const Header = () => {
 };
 
 const HeaderWrapper = styled.div`
+  position: sticky;
+  top: 0px;
   display: flex;
   height: 70px;
   min-width: 320px;
-  justify-content: center;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
+  border-bottom: 1px solid ${({ theme }) => theme.Color.GRAY3};
+  background-color: #ffffff;
 `;
 
 const ContenetWrapper = styled.div`
