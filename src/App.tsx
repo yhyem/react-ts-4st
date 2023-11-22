@@ -3,6 +3,9 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Header } from "./components";
 import { LogIn, SignUp, UserList } from "./pages";
 import { SWRConfig } from "swr";
+import { ThemeProvider } from "styled-components";
+import { theme } from "./styles/theme";
+import GlobalStyle from "./styles/GlobalStyles";
 
 const fetcher = async (url: string) => {
   const parsedUrl = url.startsWith("http") ? url : `${process.env.REACT_APP_API_URL}${url}`;
@@ -12,20 +15,23 @@ const fetcher = async (url: string) => {
 
 function App() {
   return (
-    <BrowserRouter>
-      <SWRConfig
-        value={{
-          fetcher,
-        }}
-      >
-        <Header />
-        <Routes>
-          <Route path="/" element={<UserList />} />
-          <Route path="/sign-up" element={<SignUp />} />
-          <Route path="/log-in" element={<LogIn />} />
-        </Routes>
-      </SWRConfig>
-    </BrowserRouter>
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
+      <BrowserRouter>
+        <SWRConfig
+          value={{
+            fetcher,
+          }}
+        >
+          <Header />
+          <Routes>
+            <Route path="/" element={<UserList />} />
+            <Route path="/sign-up" element={<SignUp />} />
+            <Route path="/log-in" element={<LogIn />} />
+          </Routes>
+        </SWRConfig>
+      </BrowserRouter>
+    </ThemeProvider>
   );
 }
 
