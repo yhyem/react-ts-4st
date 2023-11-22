@@ -30,11 +30,11 @@ const TabBar = styled(Link)`
   ${({ theme }) => theme.Typography.title1};
   color: ${({ theme }) => theme.Color.GRAY1};
   text-decoration: none;
-  padding-bottom: 18px;
-  border-bottom: 4px solid #ffffff;
+  padding-bottom: 22px;
 
   &:hover {
     color: ${({ theme }) => theme.Color.GREEN};
     border-bottom: 4px solid ${({ theme }) => theme.Color.GREEN};
+    padding-bottom: 18px;
   }
 `;
