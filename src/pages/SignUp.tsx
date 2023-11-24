@@ -2,6 +2,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import Input from "../components/Input";
 import { styled } from "styled-components";
 import Button from "../components/Button";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { SignUpSchema } from "../yup/SignUpSchema";
 
 type Inputs = {
   email: string;
@@ -10,11 +12,17 @@ type Inputs = {
 };
 
 export const SignUp = () => {
-  const { register, handleSubmit } = useForm<Inputs>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Inputs>({ resolver: yupResolver(SignUpSchema), mode: "onChange" });
 
   const onSubmit: SubmitHandler<Inputs> = data => {
     console.log(data);
   };
+
+  console.log(errors);
 
   return (
     <LoginWrapper>
@@ -23,24 +31,26 @@ export const SignUp = () => {
         <LoginBlock>
           <Input
             title="이름"
-            type="email"
-            placeholder="Email"
-            {...register("email", { required: true })}
+            type="text"
+            $isError={errors.username ? true : false}
+            $errorMessage={errors.username?.message}
+            register={register("username")}
           />
           <Input
             title="이메일"
-            type="password"
-            placeholder="Password"
-            {...register("password", { required: true })}
+            type="email"
+            $isError={errors.email ? true : false}
+            $errorMessage={errors.email?.message}
+            register={register("email")}
           />
           <Input
             title="비밀번호"
-            type="text"
-            placeholder="Username"
-            {...register("username", { required: true })}
+            type="password"
+            $isError={errors.password ? true : false}
+            $errorMessage={errors.password?.message}
+            register={register("password")}
           />
         </LoginBlock>
-
         <Button type="submit" text="가입하기" />
       </FormBlock>
     </LoginWrapper>

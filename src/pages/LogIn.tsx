@@ -2,6 +2,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import Input from "../components/Input";
 import { styled } from "styled-components";
 import Button from "../components/Button";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { LoginSchema } from "../yup/LoginSchema";
 
 type Inputs = {
   email: string;
@@ -9,7 +11,11 @@ type Inputs = {
 };
 
 export const LogIn = () => {
-  const { register, handleSubmit } = useForm<Inputs>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Inputs>({ resolver: yupResolver(LoginSchema) });
 
   const onSubmit: SubmitHandler<Inputs> = data => {
     console.log(data);
@@ -23,14 +29,14 @@ export const LogIn = () => {
           <Input
             title="이메일"
             type="email"
-            placeholder="Email"
-            {...register("email", { required: true })}
+            $errorMessage={errors.email?.message}
+            register={register("email")}
           />
           <Input
             title="비밀번호"
             type="password"
-            placeholder="Password"
-            {...register("password", { required: true })}
+            $errorMessage={errors.password?.message}
+            register={register("password")}
           />
         </LoginBlock>
 

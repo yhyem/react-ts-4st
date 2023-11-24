@@ -1,17 +1,19 @@
 import { styled } from "styled-components";
-
+import { UseFormRegisterReturn } from "react-hook-form";
 interface InputType {
   title: string;
   type: "email" | "password" | "text";
-  placeholder: string;
   $isError?: boolean;
+  $errorMessage?: string;
+  register: UseFormRegisterReturn<"email" | "password" | "username">;
 }
 
 const Input = (props: InputType) => {
   return (
     <InputBlockWrapper>
       <Title>{props.title}</Title>
-      <InputBlock type={props.type} placeholder={props.placeholder} />
+      <InputBlock type={props.type} {...props.register} />
+      <ErrorText>{props.$errorMessage}</ErrorText>
     </InputBlockWrapper>
   );
 };
@@ -54,3 +56,5 @@ const InputBlock = styled.input`
     border: 1px solid ${({ theme }) => theme.Color.GRAY1};
   }
 `;
+
+const ErrorText = styled.div``;
