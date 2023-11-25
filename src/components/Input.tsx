@@ -12,7 +12,7 @@ const Input = (props: InputType) => {
   return (
     <InputBlockWrapper>
       <Title>{props.title}</Title>
-      <InputBlock type={props.type} {...props.register} />
+      <InputBlock type={props.type} {...props.register} $isError={props.$isError} />
       <ErrorText>{props.$errorMessage}</ErrorText>
     </InputBlockWrapper>
   );
@@ -31,7 +31,7 @@ const Title = styled.div`
   color: ${({ theme }) => theme.Color.GRAY1};
 `;
 
-const InputBlock = styled.input`
+const InputBlock = styled.input<{ $isError?: boolean }>`
   color: ${({ theme }) => theme.Color.GRAY1};
   ${({ theme }) => theme.Typography.body1};
 
@@ -41,20 +41,19 @@ const InputBlock = styled.input`
   gap: 12px;
   align-self: stretch;
   border-radius: 12px;
-  border: 1px solid ${({ theme }) => theme.Color.GRAY3};
+  border: 1px solid ${({ theme, $isError }) => ($isError ? theme.Color.RED : theme.Color.GRAY3)};
 
   &:hover {
-    border: 1px solid ${({ theme }) => theme.Color.GRAY2};
-  }
-
-  &:active {
-    border: 1px solid ${({ theme }) => theme.Color.GRAY1};
+    border: 1px solid ${({ theme, $isError }) => ($isError ? theme.Color.RED : theme.Color.GRAY2)};
   }
 
   &:focus {
     outline: none;
-    border: 1px solid ${({ theme }) => theme.Color.GRAY1};
+    border: 1px solid ${({ theme, $isError }) => ($isError ? theme.Color.RED : theme.Color.GRAY1)};
   }
 `;
 
-const ErrorText = styled.div``;
+const ErrorText = styled.div`
+  color: ${({ theme }) => theme.Color.RED};
+  margin-top: 6px;
+`;
