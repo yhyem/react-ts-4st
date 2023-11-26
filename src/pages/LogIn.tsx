@@ -15,11 +15,13 @@ export const LogIn = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Inputs>({ resolver: yupResolver(LoginSchema) });
+  } = useForm<Inputs>({ resolver: yupResolver(LoginSchema), mode: "onChange" });
 
   const onSubmit: SubmitHandler<Inputs> = data => {
     console.log(data);
   };
+
+  console.log(errors);
 
   return (
     <LoginWrapper>
@@ -29,12 +31,14 @@ export const LogIn = () => {
           <Input
             title="이메일"
             type="email"
+            $isError={errors.email ? true : false}
             $errorMessage={errors.email?.message}
             register={register("email")}
           />
           <Input
             title="비밀번호"
             type="password"
+            $isError={errors.password ? true : false}
             $errorMessage={errors.password?.message}
             register={register("password")}
           />
