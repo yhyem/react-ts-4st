@@ -22,8 +22,6 @@ export const SignUp = () => {
     console.log(data);
   };
 
-  console.log(errors);
-
   return (
     <LoginWrapper>
       <FormBlock onSubmit={handleSubmit(onSubmit)}>
