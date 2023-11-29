@@ -4,20 +4,17 @@ import { styled } from "styled-components";
 import Button from "../components/Button";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LoginSchema } from "../yup/LoginSchema";
-
-type Inputs = {
-  email: string;
-  password: string;
-};
+import { LoginRequestPayload } from "../payload";
+import useSWR from "swr";
 
 export const LogIn = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Inputs>({ resolver: yupResolver(LoginSchema), mode: "onChange" });
+  } = useForm<LoginRequestPayload>({ resolver: yupResolver(LoginSchema), mode: "onChange" });
 
-  const onSubmit: SubmitHandler<Inputs> = data => {
+  const onSubmit: SubmitHandler<LoginRequestPayload> = data => {
     console.log(data);
   };
 

@@ -4,21 +4,16 @@ import { styled } from "styled-components";
 import Button from "../components/Button";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { SignUpSchema } from "../yup/SignUpSchema";
-
-type Inputs = {
-  email: string;
-  password: string;
-  username: string;
-};
+import { RegisterRequestPayload } from "../payload";
 
 export const SignUp = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Inputs>({ resolver: yupResolver(SignUpSchema), mode: "onChange" });
+  } = useForm<RegisterRequestPayload>({ resolver: yupResolver(SignUpSchema), mode: "onChange" });
 
-  const onSubmit: SubmitHandler<Inputs> = data => {
+  const onSubmit: SubmitHandler<RegisterRequestPayload> = data => {
     console.log(data);
   };
 
