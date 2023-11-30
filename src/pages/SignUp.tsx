@@ -5,6 +5,7 @@ import Button from "../components/Button";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { SignUpSchema } from "../yup/SignUpSchema";
 import { RegisterRequestPayload } from "../payload";
+import useSWRMutation from "swr/mutation";
 
 export const SignUp = () => {
   const {
@@ -16,6 +17,15 @@ export const SignUp = () => {
   const onSubmit: SubmitHandler<RegisterRequestPayload> = data => {
     console.log(data);
   };
+
+  async function sendRequest(url: string, { arg }: { arg: RegisterRequestPayload }) {
+    return fetch(url, {
+      method: "POST",
+      body: JSON.stringify(arg),
+    }).then(res => res.json());
+  }
+
+  const { trigger, isMutating } = useSWRMutation("/api/auth/register", sendRequest);
 
   return (
     <LoginWrapper>
